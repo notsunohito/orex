@@ -1,6 +1,6 @@
 {
   "name": "orex",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Something like flux with conversion over configuration",
   "main": "lib/index.js",
   "scripts": {
@@ -16,6 +16,12 @@
   "bugs": {
     "url": "https://github.com/notsunohito/orex/issues"
   },
+  "keywords": [
+    "react",
+    "flux",
+    "redux",
+    "state container"
+  ],
   "author": "Shuichiro Kamiya",
   "license": "MIT",
   "engines" : {
