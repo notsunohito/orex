@@ -13,8 +13,14 @@
     "type": "git",
     "url": "git://github.com/notsunohito/orex.git"
   },
+  "bugs": {
+    "url": "https://github.com/notsunohito/orex/issues"
+  },
   "author": "Shuichiro Kamiya",
   "license": "MIT",
+  "engines" : {
+    "node" : ">=6.4.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
@@ -26,6 +32,7 @@
   },
   "dependencies": {
     "deepmerge": "^1.3.2",
+    "es2015-proxy": "^0.1.7",
     "react": "^15.4.2"
   }
 }

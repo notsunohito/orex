@@ -1,3 +1,4 @@
+import Proxy from 'es2015-proxy'
 import {
     update,
     replace,
