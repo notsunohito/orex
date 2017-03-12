@@ -1,3 +1,5 @@
+README
+
 # Orex
 Orex is something like flux with conversion over configuration.
 
@@ -19,6 +21,37 @@ Orex also helps to learn React and writing prototype apps.
 # Installation
 ```
 $ npm install --save orex
+```
+
+# [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
+[live demo](http://notsu.gg/orex/examples/helloworld)
+
+```js
+import React from 'react'
+import {render} from 'react-dom'
+import {createStore, Provider} from 'orex'
+
+
+const initialState = { message: 'Hello World!' }
+const store = createStore(initialState)
+
+const HelloWorld = ({state, action})=> (
+    <div>
+        <input
+            type="text"
+            value={state.message}
+            onChange={(e)=> action.message.update(e.target.value)}
+        />
+        <p>{state.message}</p>
+    </div>
+)
+
+render(
+    <Provider store={store}>
+        <HelloWorld />
+    </Provider>,
+    document.querySelector('#app')
+)
 ```
 
 # API
