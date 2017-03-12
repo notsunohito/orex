@@ -1,5 +1,3 @@
-README
-
 # Orex
 Orex is something like flux with conversion over configuration.
 
@@ -23,7 +21,7 @@ Orex also helps to learn React and writing prototype apps.
 $ npm install --save orex
 ```
 
-# [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
+# Hello World
 [live demo](http://notsu.gg/orex/examples/helloworld)
 
 ```js
@@ -72,6 +70,8 @@ render(
 - Proxies modifying store's state.
 
 ### ActionProxy.{{key}}.{{key}}.update(value)
+- Update `state[key][key]` to `value`
+
 ```js
 import {createStore} from 'orex'
 const initialState = {
@@ -133,6 +133,8 @@ store.getState()
 	- `remove(remover:(state)=>boolean)`
 
 # Examples
+- [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
+	- [live demo](http://notsu.gg/orex/examples/helloworld/)
 - [Greetings](https://github.com/notsunohito/orex/tree/master/examples/greetings)
 	- [live demo](http://notsu.gg/orex/examples/greetings/)
 
