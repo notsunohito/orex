@@ -1,5 +1,5 @@
 # Orex
-Orex is something like flux with conversion over configuration.
+Orex is something like flux with convention over configuration.
 
 - Configureless.
 - Easy to learn.
