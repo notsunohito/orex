@@ -6,6 +6,7 @@
   "scripts": {
     "prepublish": "babel src --out-dir lib",
     "test": "mocha --require babel-register spec",
+    "test:watch": "mocha --require babel-register --watch spec",
     "build": "npm run flow:check && babel src --out-dir lib",
     "flow:check": "./node_modules/.bin/flow check"
   },
