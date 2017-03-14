@@ -236,7 +236,7 @@ describe('updater', ()=> {
             })
         })
 
-        it('rejectorが関数のときはその関数でfilterした配列で置き換える', ()=> {
+        it('rejectorが関数のときはその関数でrejectした配列で置き換える', ()=> {
             const state = {
                 users: [
                     {name: 'Pure'},
@@ -245,7 +245,7 @@ describe('updater', ()=> {
                 ]
             }
             const rejector = (array)=>{
-                return array.name !== 'Konoha'
+                return array.name === 'Konoha'
             }
             expect(reject(state, ['users'], rejector)).to.eql({
                 users: [

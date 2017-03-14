@@ -42,7 +42,8 @@ export function reject(state, _paths, rejector=null) {
     let paths = _paths
     let predicate
     if(typeof rejector === 'function') {
-        predicate = rejector
+        // rejectだけど実体はfilterなのでbooleanを反転
+        predicate = (state)=> !rejector(state)
     } else if(rejector === null){
         // users.at(2).reject()のときに
         // <= ['users', 2]
