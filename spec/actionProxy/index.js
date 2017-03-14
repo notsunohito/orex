@@ -107,7 +107,7 @@ describe('actionProxy', ()=> {
             expect(store.getState()).eql(nextState)
         })
 
-        it('users.remove(1)のようにして要素を削除できる', ()=> {
+        it('users.reject(1)のようにして要素を削除できる', ()=> {
             const state = {
                 users: [
                     {name: 'John', age: 19},
@@ -117,7 +117,7 @@ describe('actionProxy', ()=> {
             }
             const store = new Store(state)
             const actionProxy = new ActionProxy(store)
-            actionProxy.users.remove(1)
+            actionProxy.users.reject(1)
             const nextState = {
                 users: [
                     {name: 'John', age: 19},
@@ -127,7 +127,7 @@ describe('actionProxy', ()=> {
             expect(store.getState()).eql(nextState)
         })
 
-        it('users.at(1).remove()のようにして要素を削除できる', ()=> {
+        it('users.at(1).reject()のようにして要素を削除できる', ()=> {
             const state = {
                 users: [
                     {name: 'John', age: 19},
@@ -137,7 +137,7 @@ describe('actionProxy', ()=> {
             }
             const store = new Store(state)
             const actionProxy = new ActionProxy(store)
-            actionProxy.users.at(1).remove()
+            actionProxy.users.at(1).reject()
             const nextState = {
                 users: [
                     {name: 'John', age: 19},

@@ -129,8 +129,8 @@ store.getState()
 - Modifying collection
 	- `add(creater:any)`
 	- `add(creater:(state)=>any)`
-	- `remove(index:number)`
-	- `remove(remover:(state)=>boolean)`
+	- `reject(index:number)`
+	- `reject(rejector:(state)=>boolean)`
 
 # Examples
 - [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)

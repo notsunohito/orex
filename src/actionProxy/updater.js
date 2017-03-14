@@ -38,19 +38,20 @@ export function add(state, paths, creator) {
     })
 }
 
-export function remove(state, _paths, remover=null) {
+export function reject(state, _paths, rejector=null) {
     let paths = _paths
     let predicate
-    if(typeof remover === 'function') {
-        predicate = remover
-    } else if(remover === null){
-        // users.at(2).remove()のときに
+    if(typeof rejector === 'function') {
+        // rejectだけど実体はfilterなのでbooleanを反転
+        predicate = (state)=> !rejector(state)
+    } else if(rejector === null){
+        // users.at(2).reject()のときに
         // <= ['users', 2]
-        // => pathは['users']にして, predicateは2番目の要素をremoveさせる
+        // => pathは['users']にして, predicateは2番目の要素をrejectさせる
         paths = _paths.slice(0, _paths.length -1)
         predicate = (ele, i)=> i !== _paths[paths.length]
     } else {
-        predicate = (ele, i)=> i !== remover
+        predicate = (ele, i)=> i !== rejector
     }
     return update(state, paths, (state)=> {
         const array = dig(state, paths)
