@@ -1,6 +1,6 @@
 {
   "name": "orex",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Something like flux with convention over configuration",
   "main": "lib/index.js",
   "scripts": {
