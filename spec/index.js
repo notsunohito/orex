@@ -1,2 +1,2 @@
-import './actionProxy/index'
-import './actionProxy/updater'
+import './createActionProxy/'
+import './createActionProxy/updater'
