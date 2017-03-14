@@ -1,10 +1,10 @@
 import {expect} from 'chai'
 import {Store} from '../../src/createStore'
-import ActionProxy from '../../src/actionProxy'
+import createActionProxy from '../../src/createActionProxy'
 
 
 describe('actionProxy', ()=> {
-    describe('class ActionProxy', ()=> {
+    describe('function createActionProxy', ()=> {
         it('user.name.update(value)のようにしてstoreのstateを更新できる', ()=> {
             const state = {
                 user: {
@@ -13,7 +13,7 @@ describe('actionProxy', ()=> {
                 }
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             actionProxy.user.name.update('Tom')
             let nextState = {
                 user: {
@@ -41,7 +41,7 @@ describe('actionProxy', ()=> {
                 ]
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             // users[0]のnameを更新
             actionProxy.users.at(0).name.update('Notsu')
             let nextState = {
@@ -74,7 +74,7 @@ describe('actionProxy', ()=> {
                 ]
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             actionProxy.users.at(0).replace({name: 'Notsu'})
             expect(store.getState()).to.eql({
                 users: [
@@ -94,7 +94,7 @@ describe('actionProxy', ()=> {
                 ]
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             actionProxy.users.add({name: 'Notsu', age: 29})
             const nextState = {
                 users: [
@@ -116,7 +116,7 @@ describe('actionProxy', ()=> {
                 ]
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             actionProxy.users.reject(1)
             const nextState = {
                 users: [
@@ -136,7 +136,7 @@ describe('actionProxy', ()=> {
                 ]
             }
             const store = new Store(state)
-            const actionProxy = new ActionProxy(store)
+            const actionProxy = createActionProxy(store)
             actionProxy.users.at(1).reject()
             const nextState = {
                 users: [

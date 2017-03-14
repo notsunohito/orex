@@ -1,5 +1,5 @@
 /* @flow */
-import ActionProxy from './actionProxy/index'
+import createActionProxy from './createActionProxy'
 
 
 export default function createStore(initialState:Object) {
@@ -10,7 +10,7 @@ export default function createStore(initialState:Object) {
     }
 
     function getAction() {
-        return new ActionProxy(store)
+        return createActionProxy(store)
     }
 
     function subscribe(fn:Function) {
