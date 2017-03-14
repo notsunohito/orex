@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {update, replace, add, remove, merge} from '../../src/actionProxy/updater'
+import {update, replace, add, reject, merge} from '../../src/actionProxy/updater'
 
 
 describe('updater', ()=> {
@@ -218,7 +218,7 @@ describe('updater', ()=> {
         })
     })
 
-    describe('function remove', ()=> {
+    describe('function reject', ()=> {
 
         it('stateの配列の指定したindexを削除できる', ()=> {
             const state = {
@@ -228,7 +228,7 @@ describe('updater', ()=> {
                     {name: 'Notsu'}
                 ]
             }
-            expect(remove(state, ['users'], 1)).to.eql({
+            expect(reject(state, ['users'], 1)).to.eql({
                 users: [
                     {name: 'Pure'},
                     {name: 'Notsu'}
@@ -236,7 +236,7 @@ describe('updater', ()=> {
             })
         })
 
-        it('removerが関数のときはその関数でfilterした配列で置き換える', ()=> {
+        it('rejectorが関数のときはその関数でfilterした配列で置き換える', ()=> {
             const state = {
                 users: [
                     {name: 'Pure'},
@@ -244,10 +244,10 @@ describe('updater', ()=> {
                     {name: 'Notsu'}
                 ]
             }
-            const remover = (array)=>{
+            const rejector = (array)=>{
                 return array.name !== 'Konoha'
             }
-            expect(remove(state, ['users'], remover)).to.eql({
+            expect(reject(state, ['users'], rejector)).to.eql({
                 users: [
                     {name: 'Pure'},
                     {name: 'Notsu'}
@@ -263,7 +263,7 @@ describe('updater', ()=> {
                     {name: 'Notsu'}
                 ]
             }
-            expect(remove(state, ['users', 1])).to.eql({
+            expect(reject(state, ['users', 1])).to.eql({
                 users: [
                     {name: 'Pure'},
                     {name: 'Notsu'}

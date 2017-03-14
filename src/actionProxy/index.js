@@ -3,7 +3,7 @@ import {
     update,
     replace,
     add,
-    remove
+    reject
 } from './updater'
 
 
@@ -19,7 +19,7 @@ export default class ActionProxy {
                 if(methodName === 'update') return (updater)=> this.update(updater)
                 if(methodName === 'replace') return (replacer)=> this.replace(replacer)
                 if(methodName === 'add') return (creator)=> this.add(creator)
-                if(methodName === 'remove') return (remover)=> this.remove(remover)
+                if(methodName === 'reject') return (rejector)=> this.reject(rejector)
                 if(methodName === 'at') return (index)=> this.at(index)
                 this.propPaths.push(methodName)
                 return this.createProxy()
@@ -41,8 +41,8 @@ export default class ActionProxy {
         this.store.setState(nextState)
         this.propPaths = []
     }
-    remove(remover) {
-        const nextState = remove(this.store.getState(), this.propPaths, remover)
+    reject(rejector) {
+        const nextState = reject(this.store.getState(), this.propPaths, rejector)
         this.store.setState(nextState)
         this.propPaths = []
     }
