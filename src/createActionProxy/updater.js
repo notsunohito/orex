@@ -6,7 +6,7 @@ export function update(state, paths, updater, options={arrayMerge:defaultArrayMe
         ? updater(state)
         : updater
     const newProp = paths.reverse().reduce((memo, path)=> {
-        const isArray = Number.isInteger(path)
+        const isArray = isInteger(path)
         const emptyObj = isArray ? [] : {}
         emptyObj[path] = memo
         return emptyObj
@@ -20,7 +20,7 @@ export function replace(state, paths, replacer) {
         : replacer
     const holedProp = update(state, paths, null)
     const newProp = paths.reduce((memo, path)=> {
-        const isArray = Number.isInteger(path)
+        const isArray = isInteger(path)
         const emptyObj = isArray ? [] : {}
         emptyObj[path] = memo
         return emptyObj
@@ -97,4 +97,10 @@ const replaceArrayMerge = (a, b)=> b
 
 function dig(obj, paths) {
     return paths.reduce((memo, path)=>memo[path], obj)
+}
+
+function isInteger(value) {
+    return typeof value === 'number' &&
+        isFinite(value) &&
+        Math.floor(value) === value;
 }

@@ -8,7 +8,9 @@ import {
 
 export default function createActionProxy(store) {
     function createProxy(paths=[]) {
-        return new Proxy({}, {
+        const currProp = dig(store.getState(), paths)
+        const proxyObj = isLeafNode(currProp) ? {update: null, replace: null, add: null, reject: null, at: null} : currProp
+        return new Proxy(proxyObj, {
             get: (target, property)=> {
                 if(property === 'update') return (modifier)=> updateStore(store, paths, update, modifier)
                 if(property === 'replace') return (modifier)=> updateStore(store, paths, replace, modifier)
@@ -34,4 +36,13 @@ export default function createActionProxy(store) {
     }
 
     return createProxy()
+}
+
+function dig(obj, paths) {
+    if(paths.length < 1) return obj
+    return paths.reduce((memo, path)=>memo[path], obj)
+}
+
+function isLeafNode(value) {
+    return ['string', 'number', null, undefined].some((type)=> typeof value === type)
 }
