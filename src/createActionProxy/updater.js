@@ -1,4 +1,5 @@
 import deepMerge from 'deepmerge'
+import {dig, isPrimitive, isInteger, push} from './utils'
 
 
 export function update(state, paths, updater, options={arrayMerge:defaultArrayMerge}) {
@@ -6,8 +7,7 @@ export function update(state, paths, updater, options={arrayMerge:defaultArrayMe
         ? updater(state)
         : updater
     const newProp = paths.reverse().reduce((memo, path)=> {
-        const isArray = Number.isInteger(path)
-        const emptyObj = isArray ? [] : {}
+        const emptyObj = isInteger(path) ? [] : {}
         emptyObj[path] = memo
         return emptyObj
     }, value)
@@ -20,8 +20,7 @@ export function replace(state, paths, replacer) {
         : replacer
     const holedProp = update(state, paths, null)
     const newProp = paths.reduce((memo, path)=> {
-        const isArray = Number.isInteger(path)
-        const emptyObj = isArray ? [] : {}
+        const emptyObj = isInteger(path) ? [] : {}
         emptyObj[path] = memo
         return emptyObj
     }, value)
@@ -34,7 +33,7 @@ export function add(state, paths, creator) {
         : creator
     return update(state, paths, (state)=> {
         const array = dig(state, paths)
-        return [].concat(array, value)
+        return push(array, value)
     })
 }
 
@@ -80,21 +79,18 @@ const defaultArrayMerge = (_a, _b)=> {
     for(let i=0; i<length; i++) {
         // bに値があればbの値で上書き
         if(typeof b[i] !== 'undefined') {
-            // リテラルならそのまま使う
-            if(typeof b[i] === 'string' || typeof b[i] === 'number' || b[i] === null) {
+            // primitiveならそのまま使う
+            if(isPrimitive(b[i])) {
                 result.push(b[i])
                 continue
             }
             // Objectなら再帰的にmergeしたものを使う
-            result.push(merge(a[i], b[i]))
+            result.push(deepMerge(a[i], b[i], {arrayMerge:defaultArrayMerge}))
             continue
         }
         result.push(a[i])
     }
     return result
 }
-const replaceArrayMerge = (a, b)=> b
 
-function dig(obj, paths) {
-    return paths.reduce((memo, path)=>memo[path], obj)
-}
+const replaceArrayMerge = (a, b)=> b
