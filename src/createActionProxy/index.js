@@ -1,4 +1,5 @@
 import Proxy from 'es2015-proxy'
+import {dig, isPrimitive, push} from './utils'
 import {
     update,
     replace,
@@ -6,10 +7,11 @@ import {
     reject
 } from './updater'
 
+
 export default function createActionProxy(store) {
     function createProxy(paths=[]) {
         const currProp = dig(store.getState(), paths)
-        const proxyObj = isLeafNode(currProp) ? {update: null, replace: null, add: null, reject: null, at: null} : currProp
+        const proxyObj = isPrimitive(currProp) ? {update: null, replace: null, add: null, reject: null, at: null} : currProp
         return new Proxy(proxyObj, {
             get: (target, property)=> {
                 if(property === 'update') return (modifier)=> updateStore(store, paths, update, modifier)
@@ -18,7 +20,7 @@ export default function createActionProxy(store) {
                 if(property === 'reject') return (modifier)=> updateStore(store, paths, reject, modifier)
                 if(property === 'at') return (index)=> at(paths, index)
                 // immutably push
-                const nextPaths = [].concat(paths, property)
+                const nextPaths = push(paths, property)
                 return createProxy(nextPaths)
             }
         })
@@ -31,18 +33,9 @@ export default function createActionProxy(store) {
     }
 
     function at(paths, index){
-        paths.push(index)
-        return createProxy(paths)
+        const nextPaths = push(paths, index)
+        return createProxy(nextPaths)
     }
 
     return createProxy()
-}
-
-function dig(obj, paths) {
-    if(paths.length < 1) return obj
-    return paths.reduce((memo, path)=>memo[path], obj)
-}
-
-function isLeafNode(value) {
-    return ['string', 'number', null, undefined].some((type)=> typeof value === type)
 }
