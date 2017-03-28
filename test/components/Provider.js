@@ -1,7 +1,7 @@
 import React from 'react'
 import {expect} from 'chai'
-import {shallow, render} from 'enzyme'
-import {createStore, Provider} from '../../src/'
+import {shallow} from 'enzyme'
+import {createStore, Provider} from '../../src/orex'
 
 
 const HelloWorld = ({state, action})=> (

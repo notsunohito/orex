@@ -28,7 +28,7 @@ export default function createStore(initialState:Object) {
 export class Store {
     currentState:Object
     callbacks:Function[]
-    
+
     constructor(initialState:Object) {
         this.currentState = initialState
         this.callbacks = []
