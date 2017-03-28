@@ -32,6 +32,25 @@ describe('actionProxy', ()=> {
             expect(store.getState()).to.eql(nextState)
         })
 
+        it('stateのpropertyとactionの名前がconflictしているときはuser.update.$update(value)のようにしてstoreのstateを更新できる', ()=> {
+            const state = {
+                user: {
+                    update: 'John',
+                    age: 24
+                }
+            }
+            const store = new Store(state)
+            const actionProxy = createActionProxy(store)
+            actionProxy.user.update.$update('Tom')
+            let nextState = {
+                user: {
+                    update: 'Tom',
+                    age: 24
+                }
+            }
+            expect(store.getState()).to.eql(nextState)
+        })
+
         it('users.at(0).name.update(value)のようにしてstoreの配列の要素のstateを更新できる', ()=> {
             const state = {
                 users: [
