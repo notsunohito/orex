@@ -1,6 +1,6 @@
 import React from 'react'
 import {expect} from 'chai'
-import {shallow, render} from 'enzyme'
+import {shallow} from 'enzyme'
 import {createStore, Provider} from '../../src/'
 
 
