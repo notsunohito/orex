@@ -1,6 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
-import {createStore, Provider} from '../../../src'
+import {createStore, Provider} from '../../../src/orex'
 
 
 const initialState = { message: 'Greetings' }
