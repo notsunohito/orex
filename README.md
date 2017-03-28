@@ -13,7 +13,7 @@ Yes, it mentions Redux. Redux is a great framework.
 But it's too complex to write just a UI which is not a SPA, especially if it has many forms.
 So I wrote orex to solve those issues.
 
-If you see [Getting Started](https://github.com/notsunohito/orex/wiki#getting-started), you'll find that [greetings example](http://notsu.gg/orex/examples/greetings/) is written in about 20 lines.
+If you see [Getting Started](https://github.com/notsunohito/orex/wiki#getting-started), you'll find that [helloworld example](http://notsu.gg/orex/examples/helloworld/) is written in about 20 lines.
 If you just want to learn React or writing synchronous complicated form UI,
 
 [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367). You Might Need Orex.
