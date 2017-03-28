@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {update, replace, add, reject, merge} from '../../src/createActionProxy/updater'
+import {update, replace, add, reject, merge} from '../../src/createStore/updater'
 
 
 describe('updater', ()=> {

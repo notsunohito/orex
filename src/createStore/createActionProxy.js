@@ -1,4 +1,5 @@
 import Proxy from 'es2015-proxy'
+import deepMerge from 'deepmerge'
 import {dig, push} from './utils'
 import {
     update,
@@ -62,5 +63,5 @@ function createProxyObj(currProp) {
         at: null,
         $at: null
     }
-    return Object.assign({}, updaterObj, currProp)
+    return deepMerge(updaterObj, currProp)
 }

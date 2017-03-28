@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import {Store} from '../../src/createStore'
-import createActionProxy from '../../src/createActionProxy'
+import createActionProxy from '../../src/createStore/createActionProxy'
 
 
 describe('actionProxy', ()=> {
