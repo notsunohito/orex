@@ -1,7 +1,7 @@
 {
   "name": "orex",
   "version": "0.0.7",
-  "description": "Something like flux with convention over configuration",
+  "description": "Configureless state container.",
   "main": "lib/orex.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",
