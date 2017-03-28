@@ -55,6 +55,8 @@ render(
 ```
 
 # API
+[wiki](https://github.com/notsunohito/orex/wiki/API)
+
 ## Orex
 - `createStore(initialState)`
 	- returns `store:Store`
@@ -67,74 +69,8 @@ render(
 - `getState()`
 	- returns `currentState`
 - `getAction()`
-	- returns `action:ActionProxy`
+	- returns [action:ActionProxy](https://github.com/notsunohito/orex/wiki/API#actionproxy)
 - `subscribe(callback:(currentState)=>any)`
-
-## ActionProxy
-- Proxies modifying store's state.
-
-### ActionProxy.{{key}}.{{key}}.update(value)
-- Update `state[key][key]` to `value`
-
-```js
-import {createStore} from 'orex'
-const initialState = {
-  gretting: {
-    message: 'Hi!'
-  }
-}
-const store = createStore(initialState)
-
-// action:ActionProxy
-const action = store.getAction()
-
-// updates greeting.message to 'Bye!'
-action.greeting.message.update('Bye!')
-
-store.getState()
-// => { greeting: message: 'Bye!' }
-```
-
-### ActionProxy.at(index:number)
-- Allows specifying index of collection.
-
-```js
-const initialState = {
-  users: [
-    {name: 'Pure'},
-    {name: 'Daizu'},
-    {name: 'Momo'}
-  ]
-}
-const store = createStore(initialState)
-const action = store.getAction()
-
-// at(index) allows specifying index of collection.
-action.users.at(2).name.update('Konoha')
-
-store.getState()
-/**
-=> {
-     users: [
-       {name: 'Pure'},
-       {name: 'Daizu'},
-       {name: 'Konoha'}
-     ]
-   }
-**/
-```
-
-### Available operation
-- Modifying object
-	- `update(value:any)`
-	- `update(updater:(state)=>any)`
-	- `replace(value:any)`
-	- `replace(replacer:(state)=>any)`
-- Modifying collection
-	- `add(creater:any)`
-	- `add(creater:(state)=>any)`
-	- `reject(index:number)`
-	- `reject(rejector:(state)=>boolean)`
 
 # Examples
 - [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
