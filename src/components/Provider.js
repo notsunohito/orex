@@ -4,20 +4,24 @@ import React, {Component} from 'react'
 export default class Provider extends Component {
     constructor(props) {
         super(props)
-        this.state = props.store.getState()
-        this.action = props.store.getAction()
+        this.mapStoreToProps = this.props.mapStoreToProps || defaultMapStoreToProps
         props.store.subscribe((nextState)=> {
             this.setState(nextState)
         })
     }
     render() {
+        const childProps = this.mapStoreToProps(this.props.store)
         return React.createElement(
             this.props.children.type,
-            {
-                state: this.state,
-                action: this.action
-            },
+            childProps,
             null
         )
+    }
+}
+
+function defaultMapStoreToProps(store) {
+    return {
+        state: store.getState(),
+        action: store.getAction()
     }
 }
