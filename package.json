@@ -1,7 +1,7 @@
 {
   "name": "orex",
   "version": "0.0.7",
-  "description": "Configureless state container.",
+  "description": "Configureless state container for JavaScript apps.",
   "main": "lib/orex.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",

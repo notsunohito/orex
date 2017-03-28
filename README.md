@@ -1,5 +1,5 @@
 # Orex
-Orex is a Configureless state container.
+Orex is a configureless state container for JavaScript apps.
 
 - Configureless.
 - Easy to learn.
