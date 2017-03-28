@@ -58,8 +58,10 @@ render(
 ## Orex
 - `createStore(initialState)`
 	- returns `store:Store`
-- `<Provider {store:Store}>`
+- `<Provider {store:Store, mapStoreToProps:(store)=>{state, action}}>`
 	- provides props`{store, action}` for child react component.
+	- supports mapStoreToProps
+	    - default `(store)=>{state, action}`
 
 ## Store
 - `getState()`
