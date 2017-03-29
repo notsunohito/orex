@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {update, set, add, reject, merge} from '../../src/createStore/updater'
+import {update, set, add, reject, deepMerge} from '../../src/createStore/updater'
 
 
 describe('updater', ()=> {
@@ -272,9 +272,9 @@ describe('updater', ()=> {
         })
     })
 
-    describe('function merge', ()=> {
+    describe('function deepMerge', ()=> {
 
-        it('immutableにmergeする', ()=> {
+        it('immutableにdeepMergeする', ()=> {
             const a = {
                 name: 'Pure',
                 age: 24
@@ -282,7 +282,7 @@ describe('updater', ()=> {
             const b = {
                 name: 'Konoha'
             }
-            expect(merge(a, b)).to.eql({
+            expect(deepMerge(a, b)).to.eql({
                 name: 'Konoha',
                 age: 24
             })
@@ -298,7 +298,7 @@ describe('updater', ()=> {
         it('配列の要素がa, bともにstring|numberのときはbで上書きする', ()=> {
             const a = [1,2,3,4,undefined]
             const b = ['a',undefined,'c']
-            const res = merge(a, b)
+            const res = deepMerge(a, b)
             expect(res).to.eql(['a', 2, 'c', 4, undefined])
             expect(res.length).to.equal(5)
         })
@@ -312,14 +312,14 @@ describe('updater', ()=> {
                 undefined,
                 1
             ]
-            const res = merge(a, b)
+            const res = deepMerge(a, b)
             expect(res).to.eql([
                 {name: 'Pure'},
                 1
             ])
         })
 
-        it('配列の要素がaがobject, bがobjectのときはmergeする', ()=> {
+        it('配列の要素がaがobject, bがobjectのときはdeepMergeする', ()=> {
             const a = [
                 {name: 'Pure'},
                 {name: 'Konoha'}
@@ -328,17 +328,17 @@ describe('updater', ()=> {
                 undefined,
                 {name: 'Notsu', age: 24}
             ]
-            const res = merge(a, b)
+            const res = deepMerge(a, b)
             expect(res).to.eql([
                 {name: 'Pure'},
                 {name: 'Notsu', age: 24}
             ])
         })
 
-        it('配列同士のmergeではlengthが大きい方に小さい方をmergeする', ()=> {
+        it('配列同士のdeepMergeではlengthが大きい方に小さい方をdeepMergeする', ()=> {
             const a = [1,2,3]
             const b = [,,,4,5]
-            expect(merge(a,b)).to.eql([1,2,3,4,5])
+            expect(deepMerge(a,b)).to.eql([1,2,3,4,5])
         })
     })
 })

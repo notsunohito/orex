@@ -1,4 +1,4 @@
-import deepMerge from 'deepmerge'
+import _deepMerge from 'deepmerge'
 import {dig, isPrimitive, isInteger, push} from './utils'
 
 
@@ -11,7 +11,7 @@ export function update(state, paths, updater, options={arrayMerge:defaultArrayMe
         emptyObj[path] = memo
         return emptyObj
     }, value)
-    return merge(state, newProp, options)
+    return deepMerge(state, newProp, options)
 }
 
 export function set(state, paths, valueCreator) {
@@ -24,7 +24,11 @@ export function set(state, paths, valueCreator) {
         emptyObj[path] = memo
         return emptyObj
     }, value)
-    return merge(holedProp, newProp)
+    return deepMerge(holedProp, newProp)
+}
+
+export function merge(state, paths, valueCreator) {
+    return update(state, paths, valueCreator)
 }
 
 export function add(state, paths, creator) {
@@ -58,8 +62,8 @@ export function reject(state, _paths, rejector=null) {
     }, {arrayMerge:replaceArrayMerge})
 }
 
-export function merge(a, b, options={arrayMerge:defaultArrayMerge}) {
-    return deepMerge(a, b, options)
+export function deepMerge(a, b, options={arrayMerge:defaultArrayMerge}) {
+    return _deepMerge(a, b, options)
 }
 
 const defaultArrayMerge = (_a, _b)=> {
@@ -85,7 +89,7 @@ const defaultArrayMerge = (_a, _b)=> {
                 continue
             }
             // Objectなら再帰的にmergeしたものを使う
-            result.push(deepMerge(a[i], b[i], {arrayMerge:defaultArrayMerge}))
+            result.push(_deepMerge(a[i], b[i], {arrayMerge:defaultArrayMerge}))
             continue
         }
         result.push(a[i])
