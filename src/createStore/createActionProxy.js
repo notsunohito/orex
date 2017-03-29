@@ -76,10 +76,10 @@ export default function createActionProxy(store) {
     }
 
     const updaterObj =  {
-        $merge: null,
-        merge: null,
         set: null,
         $set: null,
+        $merge: null,
+        merge: null,
         add: null,
         $add: null,
         reject: null,
