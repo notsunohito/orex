@@ -11,7 +11,7 @@ const HelloWorld = ({state, action})=> (
     <input
       type="text"
       value={state.message}
-      onChange={(e)=> action.message.update(e.target.value)}
+      onChange={(e)=> action.message.set(e.target.value)}
     />
     <p>{state.message}</p>
   </div>

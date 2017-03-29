@@ -1,36 +1,28 @@
-import deepMerge from 'deepmerge'
+import _deepMerge from 'deepmerge'
 import {dig, isPrimitive, isInteger, push} from './utils'
 
 
-export function update(state, paths, updater, options={arrayMerge:defaultArrayMerge}) {
-    const value = typeof updater === 'function'
-        ? updater(state)
-        : updater
-    const newProp = paths.reverse().reduce((memo, path)=> {
-        const emptyObj = isInteger(path) ? [] : {}
-        emptyObj[path] = memo
-        return emptyObj
-    }, value)
-    return merge(state, newProp, options)
-}
-
-export function replace(state, paths, replacer) {
-    const value = typeof replacer === 'function'
-        ? replacer(state)
-        : replacer
+export function set(state, paths, valueCreator) {
+    const value = typeof valueCreator === 'function'
+        ? valueCreator(state)
+        : valueCreator
     const holedProp = update(state, paths, null)
     const newProp = paths.reduce((memo, path)=> {
         const emptyObj = isInteger(path) ? [] : {}
         emptyObj[path] = memo
         return emptyObj
     }, value)
-    return merge(holedProp, newProp)
+    return deepMerge(holedProp, newProp)
 }
 
-export function add(state, paths, creator) {
-    const value = typeof creator === 'function'
-        ? creator(state)
-        : creator
+export function merge(state, paths, valueCreator) {
+    return update(state, paths, valueCreator)
+}
+
+export function add(state, paths, valueCreator) {
+    const value = typeof valueCreator === 'function'
+        ? valueCreator(state)
+        : valueCreator
     return update(state, paths, (state)=> {
         const array = dig(state, paths)
         return push(array, value)
@@ -58,8 +50,20 @@ export function reject(state, _paths, rejector=null) {
     }, {arrayMerge:replaceArrayMerge})
 }
 
-export function merge(a, b, options={arrayMerge:defaultArrayMerge}) {
-    return deepMerge(a, b, options)
+export function update(state, paths, valueCreator, options={arrayMerge:defaultArrayMerge}) {
+    const value = typeof valueCreator === 'function'
+        ? valueCreator(state)
+        : valueCreator
+    const newProp = paths.reverse().reduce((memo, path)=> {
+        const emptyObj = isInteger(path) ? [] : {}
+        emptyObj[path] = memo
+        return emptyObj
+    }, value)
+    return deepMerge(state, newProp, options)
+}
+
+export function deepMerge(a, b, options={arrayMerge:defaultArrayMerge}) {
+    return _deepMerge(a, b, options)
 }
 
 const defaultArrayMerge = (_a, _b)=> {
@@ -85,7 +89,7 @@ const defaultArrayMerge = (_a, _b)=> {
                 continue
             }
             // Objectなら再帰的にmergeしたものを使う
-            result.push(deepMerge(a[i], b[i], {arrayMerge:defaultArrayMerge}))
+            result.push(_deepMerge(a[i], b[i], {arrayMerge:defaultArrayMerge}))
             continue
         }
         result.push(a[i])

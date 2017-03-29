@@ -7,7 +7,7 @@ describe('actionProxy', ()=> {
     describe('function createActionProxy', ()=> {
 
         describe('Updater API', ()=> {
-            it('user.name.update(value)のようにしてstoreのstateを更新できる', ()=> {
+            it('user.name.set(value)のようにしてstoreのstateを更新できる', ()=> {
                 const state = {
                     user: {
                         name: 'John',
@@ -16,7 +16,7 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.user.name.update('Tom')
+                actionProxy.user.name.set('Tom')
                 let nextState = {
                     user: {
                         name: 'Tom',
@@ -24,7 +24,7 @@ describe('actionProxy', ()=> {
                     }
                 }
                 expect(store.getState()).to.eql(nextState)
-                actionProxy.user.name.update('Ben')
+                actionProxy.user.name.set('Ben')
                 nextState = {
                     user: {
                         name: 'Ben',
@@ -34,19 +34,19 @@ describe('actionProxy', ()=> {
                 expect(store.getState()).to.eql(nextState)
             })
 
-            it('stateのpropertyとactionの名前がconflictしているときはuser.update.$update(value)のようにしてstoreのstateを更新できる', ()=> {
+            it('stateのpropertyとactionの名前がconflictしているときはuser.set.$set(value)のようにしてstoreのstateを更新できる', ()=> {
                 const state = {
                     user: {
-                        update: 'John',
+                        set: 'John',
                         age: 24
                     }
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.user.update.$update('Tom')
+                actionProxy.user.set.$set('Tom')
                 let nextState = {
                     user: {
-                        update: 'Tom',
+                        set: 'Tom',
                         age: 24
                     }
                 }
@@ -55,7 +55,7 @@ describe('actionProxy', ()=> {
         })
 
         describe('Collection API', ()=> {
-            it('users.at(0).name.update(value)のようにしてstoreの配列の要素のstateを更新できる', ()=> {
+            it('users.at(0).name.set(value)のようにしてstoreの配列の要素のstateを更新できる', ()=> {
                 const state = {
                     users: [
                         {name: 'John', age: 19},
@@ -66,7 +66,7 @@ describe('actionProxy', ()=> {
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
                 // users[0]のnameを更新
-                actionProxy.users.at(0).name.update('Notsu')
+                actionProxy.users.at(0).name.set('Notsu')
                 let nextState = {
                     users: [
                         {name: 'Notsu', age: 19},
@@ -77,7 +77,7 @@ describe('actionProxy', ()=> {
                 // users[0]のageを更新
                 expect(store.getState()).to.eql(nextState)
                 // users[0]のageを更新
-                actionProxy.users.at(0).age.update(29)
+                actionProxy.users.at(0).age.set(29)
                 nextState = {
                     users: [
                         {name: 'Notsu', age: 29},
@@ -88,7 +88,7 @@ describe('actionProxy', ()=> {
                 expect(store.getState()).eql(nextState)
             })
 
-            it('users.at(0).replace({name: "Notsu"})のようにしてstateの配列の要素を置換できる', ()=> {
+            it('users.at(0).set({name: "Notsu"})のようにしてstateの配列の要素を置換できる', ()=> {
                 const state = {
                     users: [
                         {name: 'John', age: 19},
@@ -98,7 +98,7 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.users.at(0).replace({name: 'Notsu'})
+                actionProxy.users.at(0).set({name: 'Notsu'})
                 expect(store.getState()).to.eql({
                     users: [
                         {name: 'Notsu'},
@@ -181,7 +181,7 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.def('emptyName', (action)=> action.user.name.update(''))
+                actionProxy.def('emptyName', (action)=> action.user.name.set(''))
                 actionProxy.emptyName()
                 const nextState = {
                     user: {
@@ -200,7 +200,7 @@ describe('actionProxy', ()=> {
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
                 // actionのscopeが固定される
-                actionProxy.user.name.def('empty', (name)=> name.update(''))
+                actionProxy.user.name.def('empty', (name)=> name.set(''))
                 actionProxy.user.name.empty()
                 const nextState = {
                     user: {
@@ -221,7 +221,7 @@ describe('actionProxy', ()=> {
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
                 // actionのscopeが固定される
-                actionProxy.users.$ele.name.def('empty', (name)=> name.update(''))
+                actionProxy.users.$ele.name.def('empty', (name)=> name.set(''))
                 actionProxy.users.at(0).name.empty()
                 const nextState = {
                     users: [
