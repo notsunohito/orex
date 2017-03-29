@@ -40,7 +40,7 @@ const HelloWorld = ({state, action})=> (
     <input
       type="text"
       value={state.message}
-      onChange={(e)=> action.message.update(e.target.value)}
+      onChange={(e)=> action.message.set(e.target.value)}
     />
     <p>{state.message}</p>
   </div>
@@ -75,8 +75,6 @@ render(
 # Examples
 - [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
 	- [live demo](http://notsu.gg/orex/examples/helloworld/)
-- [Greetings](https://github.com/notsunohito/orex/tree/master/examples/greetings)
-	- [live demo](http://notsu.gg/orex/examples/greetings/)
 
 # License
 MIT
