@@ -2,8 +2,9 @@
 
 ```
 $ git clone https://github.com/notsunohito/orex
+$ cd orex
 $ npm install
-$ cd orex/examples/helloworld
+$ cd examples/helloworld
 $ npm install
 $ npm start
 ```
