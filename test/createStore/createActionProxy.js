@@ -88,7 +88,7 @@ describe('actionProxy', ()=> {
                 expect(store.getState()).eql(nextState)
             })
 
-            it('users.at(0).replace({name: "Notsu"})のようにしてstateの配列の要素を置換できる', ()=> {
+            it('users.at(0).set({name: "Notsu"})のようにしてstateの配列の要素を置換できる', ()=> {
                 const state = {
                     users: [
                         {name: 'John', age: 19},
@@ -98,7 +98,7 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.users.at(0).replace({name: 'Notsu'})
+                actionProxy.users.at(0).set({name: 'Notsu'})
                 expect(store.getState()).to.eql({
                     users: [
                         {name: 'Notsu'},

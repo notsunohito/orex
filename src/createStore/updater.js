@@ -14,10 +14,10 @@ export function update(state, paths, updater, options={arrayMerge:defaultArrayMe
     return merge(state, newProp, options)
 }
 
-export function replace(state, paths, replacer) {
-    const value = typeof replacer === 'function'
-        ? replacer(state)
-        : replacer
+export function set(state, paths, valueCreator) {
+    const value = typeof valueCreator === 'function'
+        ? valueCreator(state)
+        : valueCreator
     const holedProp = update(state, paths, null)
     const newProp = paths.reduce((memo, path)=> {
         const emptyObj = isInteger(path) ? [] : {}

@@ -1,5 +1,5 @@
 import {expect} from 'chai'
-import {update, replace, add, reject, merge} from '../../src/createStore/updater'
+import {update, set, add, reject, merge} from '../../src/createStore/updater'
 
 
 describe('updater', ()=> {
@@ -78,7 +78,7 @@ describe('updater', ()=> {
         })
     })
 
-    describe('function replace', ()=> {
+    describe('function set', ()=> {
 
         it('存在するstateのpropertyのpathを指定して置換できる', ()=> {
             const state = {
@@ -93,7 +93,7 @@ describe('updater', ()=> {
             }
 
             // company.department.divisionが更新される
-            expect(replace(state, ['company', 'department', 'division'], {test: 'Hello'})).eql({
+            expect(set(state, ['company', 'department', 'division'], {test: 'Hello'})).eql({
                 company: {
                     department: {
                         division: {
@@ -131,7 +131,7 @@ describe('updater', ()=> {
                 return {greetings: `Hi I'm ${state.company.department.division.name}!`}
             }
             // company.department.divisionが置換される
-            expect(replace(state, ['company', 'department', 'division'], replacer)).eql({
+            expect(set(state, ['company', 'department', 'division'], replacer)).eql({
                 company: {
                     department: {
                         name: 'Konoha',
@@ -152,7 +152,7 @@ describe('updater', ()=> {
                 ]
             }
 
-            expect(replace(state, ['users', 1, 'age'], {test:'Hello'})).to.eql({
+            expect(set(state, ['users', 1, 'age'], {test:'Hello'})).to.eql({
                 users: [
                     {name: 'John', age: 19},
                     {name: 'Tom', age: { test: 'Hello'} },
@@ -169,7 +169,7 @@ describe('updater', ()=> {
                 ]
             }
 
-            expect(replace(state, ['users', 1, 1], {test:'Hello'})).to.eql({
+            expect(set(state, ['users', 1, 1], {test:'Hello'})).to.eql({
                 users: [
                     [1,2,3,4,5],
                     ['a',{test:'Hello'},'c']

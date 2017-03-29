@@ -3,7 +3,7 @@ import deepMerge from 'deepmerge'
 import {dig, push, isInteger} from './utils'
 import {
     update,
-    replace,
+    set,
     add,
     reject
 } from './updater'
@@ -20,7 +20,7 @@ export default function createActionProxy(store) {
                 const customUpdaterPropName = createCustomUpdaterPropName(paths, property)
                 if(typeof customUpdaters[customUpdaterPropName] !== 'undefined') return customUpdaters[customUpdaterPropName]
                 if(shouldReturnUpdater('update', property, currProp)) return (modifier)=> updateStore(store, paths, update, modifier)
-                if(shouldReturnUpdater('replace', property, currProp)) return (modifier)=> updateStore(store, paths, replace, modifier)
+                if(shouldReturnUpdater('set', property, currProp)) return (modifier)=> updateStore(store, paths, set, modifier)
                 if(shouldReturnUpdater('add', property, currProp)) return (modifier)=> updateStore(store, paths, add, modifier)
                 if(shouldReturnUpdater('reject', property, currProp)) return (modifier)=> updateStore(store, paths, reject, modifier)
                 if(shouldReturnUpdater('at', property, currProp)) return (index)=> at(paths, index)
@@ -78,8 +78,8 @@ export default function createActionProxy(store) {
     const updaterObj =  {
         update: null,
         $update: null,
-        replace: null,
-        $replace: null,
+        set: null,
+        $set: null,
         add: null,
         $add: null,
         reject: null,
