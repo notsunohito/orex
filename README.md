@@ -75,6 +75,8 @@ render(
 # Examples
 - [Hello World](https://github.com/notsunohito/orex/tree/master/examples/helloworld)
 	- [live demo](http://notsu.gg/orex/examples/helloworld/)
+- [Todos](https://github.com/notsunohito/orex/tree/master/examples/todos)
+	- [live demo](http://notsu.gg/orex/examples/todos/)
 
 # License
 MIT
