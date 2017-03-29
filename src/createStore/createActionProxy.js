@@ -1,6 +1,6 @@
 import Proxy from 'es2015-proxy'
 import deepMerge from 'deepmerge'
-import {dig, push} from './utils'
+import {dig, push, isInteger} from './utils'
 import {
     update,
     replace,
@@ -39,16 +39,18 @@ export default function createActionProxy(store) {
         updaterObj[updaterName] = null
         const propName = createCustomUpdaterPropName(paths, updaterName)
         customUpdaters[propName] = ()=> {
-            const state = store.getState()
-            const action = createProxy()
-            customUpdater(state, action, paths)
+            const currAction = createProxy(paths)
+            const currProp = dig(store.getState(), paths)
+            const entireAction  = createProxy()
+            const entireState = store.getState()
+            customUpdater(currAction, currProp, entireAction, entireState)
             return createProxy()
         }
         return createProxy()
     }
 
     function createCustomUpdaterPropName(paths, updaterName) {
-        return push(paths, updaterName).join('@')
+        return push(paths.filter((path)=>!isInteger(path)), updaterName).join('@')
     }
 
     function updateStore(store, paths, updater, modifier) {
@@ -86,5 +88,3 @@ export default function createActionProxy(store) {
 
     return createProxy()
 }
-
-
