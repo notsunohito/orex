@@ -1,86 +1,12 @@
 import {expect} from 'chai'
-import {update, set, add, reject, deepMerge} from '../../src/createStore/updater'
+import {merge, set, add, reject, deepMerge} from '../../src/createStore/updater'
 
 
 describe('updater', ()=> {
 
-    describe('function update', ()=> {
-
-        it('存在するstateのpropertyのpathを指定して更新できる', ()=> {
-            const state = {
-                company: {
-                    name: 'Socket',
-                    zipCode: '107-0062'
-                }
-            }
-
-            // company.nameが更新される
-            expect(update(state, ['company', 'name'], 'Supership')).eql({
-                company: {
-                    name: 'Supership',
-                    zipCode: '107-0062'
-                }
-            })
-            // immutableに更新する
-            expect(state).to.eql({
-                company: {
-                    name: 'Socket',
-                    zipCode: '107-0062'
-                }
-            })
-        })
-
-        it('存在しないstateのpropertyのpathを指定するとpropertyが新たに追加される', ()=> {
-            const state = {
-                company: {
-                    name: 'Socket',
-                    zipCode: '107-0062'
-                }
-            }
-
-            expect(update(state, ['company', 'address'], 'Minato-ku, Tokyo')).to.eql({
-                company: {
-                    name: 'Socket',
-                    zipCode: '107-0062',
-                    address: 'Minato-ku, Tokyo'
-                }
-            })
-        })
-
-        it('配列を更新できる', ()=> {
-            const state = [1,2,3,4,5]
-            expect(update(state, [1], 20)).to.eql([1,20,3,4,5])
-
-        })
-
-        it('多次元配列を更新できる', ()=> {
-            const state = [
-                [1,2,3,4,5],
-                ['a','b','c']
-            ]
-            expect(update(state, [1, 1], 'B')).to.eql([
-                [1,2,3,4,5],
-                ['a','B','c']
-            ])
-        })
-
-        it('updaterが関数のときはその関数にstateを適用した値で更新する', ()=> {
-            const state = {
-                name: 'Notsu',
-                age: 24
-            }
-            const updater = (state)=> `Hi I'm ${state.name}, ${state.age} years old.`
-            expect(update(state, ['greetings'], updater)).to.eql({
-                name: 'Notsu',
-                age: 24,
-                greetings: "Hi I'm Notsu, 24 years old."
-            })
-        })
-    })
-
     describe('function set', ()=> {
 
-        it('存在するstateのpropertyのpathを指定して置換できる', ()=> {
+        it('存在するstateのpropertyのpathを指定してsetできる', ()=> {
             const state = {
                 company: {
                     department: {
@@ -127,11 +53,11 @@ describe('updater', ()=> {
                 }
             }
 
-            const replacer = (state)=> {
+            const valueCreator = (state)=> {
                 return {greetings: `Hi I'm ${state.company.department.division.name}!`}
             }
             // company.department.divisionが置換される
-            expect(set(state, ['company', 'department', 'division'], replacer)).eql({
+            expect(set(state, ['company', 'department', 'division'], valueCreator)).eql({
                 company: {
                     department: {
                         name: 'Konoha',
@@ -174,6 +100,79 @@ describe('updater', ()=> {
                     [1,2,3,4,5],
                     ['a',{test:'Hello'},'c']
                 ]
+            })
+        })
+    })
+
+    describe('function merge', ()=> {
+
+        it('存在するstateのpropertyのpathを指定して設定できる', ()=> {
+            const state = {
+                company: {
+                    name: 'Socket',
+                    zipCode: '107-0062'
+                }
+            }
+
+            // company.nameが更新される
+            expect(merge(state, ['company', 'name'], 'Supership')).eql({
+                company: {
+                    name: 'Supership',
+                    zipCode: '107-0062'
+                }
+            })
+            // immutableに更新する
+            expect(state).to.eql({
+                company: {
+                    name: 'Socket',
+                    zipCode: '107-0062'
+                }
+            })
+        })
+
+        it('存在しないstateのpropertyのpathを指定するとpropertyが新たに追加される', ()=> {
+            const state = {
+                company: {
+                    name: 'Socket',
+                    zipCode: '107-0062'
+                }
+            }
+
+            expect(merge(state, ['company', 'address'], 'Minato-ku, Tokyo')).to.eql({
+                company: {
+                    name: 'Socket',
+                    zipCode: '107-0062',
+                    address: 'Minato-ku, Tokyo'
+                }
+            })
+        })
+
+        it('配列をmergeできる', ()=> {
+            const state = [1,2,3,4,5]
+            expect(merge(state, [1], 20)).to.eql([1,20,3,4,5])
+        })
+
+        it('多次元配列をmergeできる', ()=> {
+            const state = [
+                [1,2,3,4,5],
+                ['a','b','c']
+            ]
+            expect(merge(state, [1, 1], 'B')).to.eql([
+                [1,2,3,4,5],
+                ['a','B','c']
+            ])
+        })
+
+        it('valueCreatorが関数のときはその関数にstateを適用した値で更新する', ()=> {
+            const state = {
+                name: 'Notsu',
+                age: 24
+            }
+            const valueCreator = (state)=> `Hi I'm ${state.name}, ${state.age} years old.`
+            expect(merge(state, ['greetings'], valueCreator)).to.eql({
+                name: 'Notsu',
+                age: 24,
+                greetings: "Hi I'm Notsu, 24 years old."
             })
         })
     })

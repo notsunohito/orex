@@ -181,7 +181,7 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
-                actionProxy.def('emptyName', (action)=> action.user.name.update(''))
+                actionProxy.def('emptyName', (action)=> action.user.name.set(''))
                 actionProxy.emptyName()
                 const nextState = {
                     user: {
@@ -200,7 +200,7 @@ describe('actionProxy', ()=> {
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
                 // actionのscopeが固定される
-                actionProxy.user.name.def('empty', (name)=> name.update(''))
+                actionProxy.user.name.def('empty', (name)=> name.set(''))
                 actionProxy.user.name.empty()
                 const nextState = {
                     user: {
@@ -221,7 +221,7 @@ describe('actionProxy', ()=> {
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
                 // actionのscopeが固定される
-                actionProxy.users.$ele.name.def('empty', (name)=> name.update(''))
+                actionProxy.users.$ele.name.def('empty', (name)=> name.set(''))
                 actionProxy.users.at(0).name.empty()
                 const nextState = {
                     users: [

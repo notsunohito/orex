@@ -22,7 +22,7 @@ describe('components', ()=> {
             )
             const {state, action} = wrapper.find(HelloWorld).props()
             expect(state.message).to.equal('Hi!')
-            expect(action.message.update).to.be.a('function');
+            expect(action.message.set).to.be.a('function');
         })
 
         it('Allows you to pass the mapStoreToProps', ()=> {
@@ -40,7 +40,7 @@ describe('components', ()=> {
             )
             const {data, proxy} = wrapper.find(HelloWorld).props()
             expect(data.message).to.equal('Hi!')
-            expect(proxy.message.update).to.be.a('function');
+            expect(proxy.message.set).to.be.a('function');
         })
     })
 })
