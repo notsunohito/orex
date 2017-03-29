@@ -10,6 +10,7 @@ import {
 
 
 export default function createActionProxy(store) {
+    // TODO: Refactor
     const customUpdaters = {}
     function createProxy(paths=[]) {
         const currProp = dig(store.getState(), paths)
@@ -35,6 +36,7 @@ export default function createActionProxy(store) {
         return createProxy(nextPaths)
     }
 
+    // TODO: 実装:配列の要素のprop pathを指定したdefine
     function def(paths, updaterName, customUpdater) {
         updaterObj[updaterName] = null
         const propName = createCustomUpdaterPropName(paths, updaterName)

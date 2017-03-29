@@ -173,7 +173,7 @@ describe('actionProxy', ()=> {
 
         describe('Define API', ()=> {
 
-            it('user.name.def("empty", Function)のようにして関数を定義できる', ()=> {
+            it('action.def("emptyName", Function)のようにして関数を定義できる', ()=> {
                 const state = {
                     user: {
                         name: 'Notsu'
@@ -181,12 +181,53 @@ describe('actionProxy', ()=> {
                 }
                 const store = new Store(state)
                 const actionProxy = createActionProxy(store)
+                actionProxy.def('emptyName', (action)=> action.user.name.update(''))
+                actionProxy.emptyName()
+                const nextState = {
+                    user: {
+                        name: ''
+                    }
+                }
+                expect(store.getState()).eql(nextState)
+            })
+
+            it('action.user.name.def("empty", Function)のようにして関数を定義できる', ()=> {
+                const state = {
+                    user: {
+                        name: 'Notsu'
+                    }
+                }
+                const store = new Store(state)
+                const actionProxy = createActionProxy(store)
+                // actionのscopeが固定される
                 actionProxy.user.name.def('empty', (name)=> name.update(''))
                 actionProxy.user.name.empty()
                 const nextState = {
                     user: {
                         name: ''
                     }
+                }
+                expect(store.getState()).eql(nextState)
+            })
+
+            // TODO: 未実装
+            it.skip('action.users.$ele.name.def("empty", Function)のようにして関数を定義できる', ()=> {
+                const state = {
+                    users: [
+                        { name: 'Pure' },
+                        { name: 'Konoha' },
+                    ]
+                }
+                const store = new Store(state)
+                const actionProxy = createActionProxy(store)
+                // actionのscopeが固定される
+                actionProxy.users.$ele.name.def('empty', (name)=> name.update(''))
+                actionProxy.users.at(0).name.empty()
+                const nextState = {
+                    users: [
+                        { name: '' },
+                        { name: 'Konoha' },
+                    ]
                 }
                 expect(store.getState()).eql(nextState)
             })
