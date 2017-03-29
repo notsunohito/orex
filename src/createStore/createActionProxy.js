@@ -40,12 +40,12 @@ export default function createActionProxy(store) {
     function def(paths, updaterName, customUpdater) {
         updaterObj[updaterName] = null
         const propName = createCustomUpdaterPropName(paths, updaterName)
-        customUpdaters[propName] = ()=> {
+        customUpdaters[propName] = (...args)=> {
             const currAction = createProxy(paths)
             const currProp = dig(store.getState(), paths)
             const entireAction  = createProxy()
             const entireState = store.getState()
-            customUpdater(currAction, currProp, entireAction, entireState)
+            customUpdater(args, currAction, currProp, entireAction, entireState)
             return createProxy()
         }
         return createProxy()
