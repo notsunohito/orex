@@ -165,5 +165,23 @@ describe('actionProxy', ()=> {
             }
             expect(store.getState()).eql(nextState)
         })
+
+        it('user.name.def("empty", Function)のようにして関数を定義できる', ()=> {
+            const state = {
+                user: {
+                    name: 'Notsu'
+                }
+            }
+            const store = new Store(state)
+            const actionProxy = createActionProxy(store)
+            actionProxy.user.name.def('empty', (state, action, paths)=> action.user.name.update(''))
+            actionProxy.user.name.empty()
+            const nextState = {
+                user: {
+                    name: ''
+                }
+            }
+            expect(store.getState()).eql(nextState)
+        })
     })
 })
