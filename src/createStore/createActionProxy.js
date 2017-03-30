@@ -85,7 +85,9 @@ export default function createActionProxy(store) {
         reject: null,
         $reject: null,
         at: null,
-        $at: null
+        $at: null,
+        def: null,
+        $def: null
     }
 
     return createProxy()
