@@ -1,0 +1,21 @@
+ul {
+    list-style-type: none;
+}
+
+#app {
+    width: 40vw;
+    margin: 0 auto;
+}
+
+#todo-list li {
+    display: table-cell;
+}
+
+#todo-list li * {
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.todo-name {
+    margin: 0 16px 0 5px;
+}

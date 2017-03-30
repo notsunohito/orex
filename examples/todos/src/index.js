@@ -31,38 +31,44 @@ const Todos = ({state, action})=> (
       }}
     />
     <Button
-      caption="clear"
+      caption="Clear"
       onClick={()=>action.todos.set([])}
     />
-    <ul>
+    <ul id="todo-list">
       {state.todos.map((todo, i)=>(
-        <Todo key={todo.key} todo={todo} todoAction={action.todos.at(i)} />
+        <Todo key={todo.key} todo={todo} todoAction={action.todos.at(i)} action={action} />
       ))}
     </ul>
   </div>
 )
 
-const Todo = ({todo, todoAction})=> {
+const Todo = ({todo, todoAction, action})=> {
     const style = todo.isDone ? {'textDecoration': 'line-through'} : {}
     return (
       <li>
-        <div>
-          <input
-            type="checkbox"
-            checked={todo.isDone}
-            onChange={(e)=>todoAction.isDone.set(e.target.checked)}
-          />
-          <label style={style}>{todo.name}</label>
-        </div>
+        <input
+          type="checkbox"
+          checked={todo.isDone}
+          onChange={(e)=>todoAction.isDone.set(e.target.checked)}
+        />
+        <span className="todo-name" style={style}>{todo.name}</span>
+        <Icon type="remove" onClick={()=>action.todos.reject((_todo)=>_todo.key === todo.key)}/>
       </li>
     )
 }
 
 const Button = ({onClick, caption})=> (
-    <button onClick={onClick}>
-        {caption}
-    </button>
+  <button onClick={onClick}>
+    {caption}
+  </button>
 )
+
+const Icon = ({onClick, type})=> {
+  const className = `glyphicon glyphicon-${type}`
+  return (
+    <span className={className} onClick={onClick}></span>
+  )
+}
 
 
 render(
