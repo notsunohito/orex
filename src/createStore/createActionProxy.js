@@ -1,6 +1,6 @@
 import Proxy from 'es2015-proxy'
 import deepMerge from 'deepmerge'
-import {dig, push, isInteger} from './utils'
+import {dig, push, isInteger, isPrimitive} from './utils'
 import {
     set,
     merge,
@@ -72,6 +72,7 @@ export default function createActionProxy(store) {
     // So create proxy object with updaterObj and currProp.
     // See also https://github.com/GoogleChrome/proxy-polyfill
     function createProxyObj(currProp) {
+        if(isPrimitive(currProp)) return updaterObj
         return deepMerge(updaterObj, currProp)
     }
 
