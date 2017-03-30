@@ -1,6 +1,6 @@
 {
   "name": "orex",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Configureless state container for JavaScript apps.",
   "main": "lib/orex.js",
   "scripts": {
